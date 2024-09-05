@@ -17,12 +17,13 @@ function renderData(data) {
 			<div class="item" key="${index}">
         <img class="image" src="${item.image.thumbnail}" alt="${item.name}" />
         <div class="addToCart">
-          <link href="#">
-            <button>-</button>
+          <a class="addLink" href="#">
+            <span class="icon"></span>
+            <button class="addButton">-</button>
             Add to Cart
-            <button>+</button>
-          </div>
-        </link>
+            <button class="addButton">+</button>
+          </a>
+        </div>
         <div class="innerContainer">
           <div class="category">${item.category}</div>
           <div class="name">${item.name}</div>

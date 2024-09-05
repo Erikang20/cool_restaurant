@@ -1,0 +1,26 @@
+.productContainer {
+	margin: 20px;
+	display: grid;
+	grid-template-columns: repeat(3, 200px);
+	grid-template-rows: repeat(3, 400px);
+}
+
+.itemContainer {
+}
+
+.category {
+	color: var(--brown);
+	font-size: 16px;
+	font-weight: 500;
+}
+
+.name {
+	color: #260f08;
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 150%;
+}
+
+.price {
+	color: var(--red);
+}

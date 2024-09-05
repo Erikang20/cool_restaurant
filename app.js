@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 
 app.use(express.static(path.join(__dirname, "app")));
+app.use(express.static(path.join(__dirname, "public")));
 
 // Serve JSON data from the '/desserts' endpoint
 app.get("/desserts", dessertRoute);

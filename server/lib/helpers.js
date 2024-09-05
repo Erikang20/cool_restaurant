@@ -21,21 +21,9 @@ const fs = require("fs");
  * @param {*} callback
  * gets Data
  */
-const getData = (fileName, callback) => {
-	const filePath = path.join(__dirname, fileName);
-
-	fs.readFile(filePath, "utf8", (err, data) => {
-		if (err) {
-			callback(err, null);
-			return;
-		}
-		try {
-			const jsonData = JSON.parse(data);
-			callback(null, jsonData);
-		} catch (parseErr) {
-			callback(parseErr, null);
-		}
-	});
-};
+function getData() {
+	const filePath = path.resolve(__dirname, "data.json");
+	return JSON.parse(fs.readFileSync(filePath, "utf8"));
+}
 
 module.exports = { getData };

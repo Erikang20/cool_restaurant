@@ -1,4 +1,5 @@
 import { createNewElement, formatPrice } from "./util.js";
+import { renderCart } from "./cart.js";
 
 document.addEventListener("DOMContentLoaded", () => {
 	fetch("/desserts")
@@ -10,19 +11,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function renderData(data) {
-	const container = document.querySelector(".container");
+	const container = document.querySelector(".dessert-container");
 	const newList = data
 		.map((item, index) => {
 			return `
 			<div class="item" key="${index}">
         <img class="image" src="${item.image.thumbnail}" alt="${item.name}" />
-        <div class="addToCart">
-          <a class="addLink" href="#">
-            <span class="icon"></span>
-            <button class="addButton">-</button>
+        <div class="addToCart addLink">
+          <span class="add">
+            <span class="icon add"></span>
             Add to Cart
-            <button class="addButton">+</button>
-          </a>
+          </span>
+          <span class="hideBtns">
+            <button class="addButton hide">-</button>
+            <button class="addButton hide">+</button>
+          </span>
         </div>
         <div class="innerContainer">
           <div class="category">${item.category}</div>
@@ -35,14 +38,28 @@ function renderData(data) {
 		.join("");
 
 	container.innerHTML = newList;
+	renderCart();
 	addEventListeners();
 }
 
 function addEventListeners() {
 	const buttons = document.querySelectorAll(".addToCart");
-	buttons.forEach((button, index) => {
+
+	buttons.forEach((button) => {
 		button.addEventListener("click", () => {
-			console.log(`Added item ${index + 1} to cart`);
+			const toRemove = button.querySelectorAll(".add");
+			toRemove.forEach((el) => {
+				el.classList.add("hidden");
+				el.classList.remove("hide");
+			});
+
+			const hideBtns = button.querySelector(".hideBtns");
+			if (hideBtns) {
+				const hiddenElements = hideBtns.querySelectorAll(".addButton");
+				hiddenElements.forEach((el) => {
+					el.classList.remove("hide");
+				});
+			}
 		});
 	});
 }

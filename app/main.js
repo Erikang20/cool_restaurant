@@ -25,11 +25,11 @@ function renderData(data) {
             <span class="add">Add to Cart</span>
           </div>
           <div class="hideBtns">
-            <button class="addButton hide">
+            <button class="addButton hide decreaseCount">
               <img class="icon-btn" src="/images/icon-decrement-quantity.svg"/>
             </button>
-            <span class="addButton hide">1</span>
-            <button class="addButton hide">
+            <span class="addButton hide quantity">1</span>
+            <button class="addButton hide addCount">
               <img class="icon-btn" src="/images/icon-increment-quantity.svg"/>
             </button>
           </div>
@@ -51,6 +51,7 @@ function renderData(data) {
 
 function addEventListeners(data) {
 	const buttons = document.querySelectorAll(".addToCart");
+	const itemSelected = document.querySelectorAll(".item");
 
 	buttons.forEach((button) => {
 		button.addEventListener("click", () => {
@@ -71,6 +72,7 @@ function addEventListeners(data) {
 			});
 
 			const hideBtns = button.querySelector(".hideBtns");
+
 			if (hideBtns) {
 				const hiddenElements = hideBtns.querySelectorAll(".addButton");
 				hiddenElements.forEach((el) => {
@@ -78,30 +80,66 @@ function addEventListeners(data) {
 					el.classList.remove("hide");
 				});
 			}
+
+			/**
+			 * Handles the increment of the quantity when adding it to the cart
+			 */
+			const addCount = button.querySelector(".addCount");
+			addCount.addEventListener("click", (e) => {
+				e.stopPropagation();
+				const quantity = button.querySelector(".quantity");
+				quantity.textContent = Number(quantity.textContent) + 1;
+			});
+
+			/**
+			 * Handles the decrease of the quantity when adding it to the cart
+			 */
+			const decreaseCount = button.querySelector(".decreaseCount");
+			decreaseCount.addEventListener("click", (e) => {
+				e.stopPropagation();
+				const quantity = button.querySelector(".quantity");
+				const currentQuantity = Number(quantity.textContent);
+
+				if (currentQuantity > 1) {
+					quantity.textContent = currentQuantity - 1;
+				} else {
+					quantity.textContent = 0;
+					const multiBtns = button.closest(".addToCart");
+
+					multiBtns.classList.remove("multi-btns");
+
+					/**
+					 * Reverts buttons to the initial state
+					 */
+					btnsToHide.forEach((el) => {
+						el.classList.remove("hidden");
+						el.classList.remove("hide");
+						el.classList.remove("hideBtns");
+					});
+
+					/**
+					 * Removes the classes for the counter
+					 */
+					const hiddenElements = hideBtns.querySelectorAll(".addButton");
+					hiddenElements.forEach((el) => {
+						el.classList.remove("counterBtns");
+						el.classList.add("hide");
+					});
+
+					itemSelected.forEach((item) => {
+						const firstChild = item.firstElementChild;
+						firstChild.classList.remove("selectedImg");
+					});
+				}
+			});
 		});
 	});
 
-	const itemSelected = document.querySelectorAll(".item");
 	itemSelected.forEach((item) => {
 		item.addEventListener("click", (e) => {
 			e.stopPropagation();
 			const firstChild = item.firstElementChild;
-			console.log(firstChild);
 			firstChild.classList.add("selectedImg");
 		});
 	});
 }
-
-// function updateCartUI(data) {
-// 	const cartContainer = document.querySelector(".cart-container");
-// 	cartContainer.innerHTML = "";
-
-// 	cart.forEach((item) => {
-// 		const itemElement = document.createElement("div");
-// 		itemElement.innerHTML = `
-//             <div>${item.name} - ${item.quantity} x $${item.price}</div>
-//             <button onclick="removeFromCart(${item.id})">Remove</button>
-//         `;
-// 		cartContainer.appendChild(itemElement);
-// 	});
-// }

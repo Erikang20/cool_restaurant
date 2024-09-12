@@ -114,11 +114,11 @@ h1 {
 
 .multi-btns {
 	display: flex;
-	background-color: #c73b0f;
+	background-color: var(--red);
 }
 
 .hideBtns {
-	background-color: #c73b0f;
+	background-color: var(--red);
 }
 
 .innerContainer {
@@ -129,7 +129,7 @@ h1 {
 	border-radius: 50%;
 	width: 25px;
 	height: 25px;
-	background-color: #c73b0f;
+	background-color: var(--red);
 	border-color: white;
 }
 
@@ -140,8 +140,9 @@ h1 {
 	width: 10px;
 }
 
-.counterBtns {
-	color: white;
+.counterBtns,
+.cart-item {
+	color: #fff;
 }
 
 .selectedImg {
@@ -215,19 +216,104 @@ p.empty-cart-el {
 	background-color: #fff;
 }
 
-.cart-item .item-details,
+.item-details,
 .item-details-name {
 	background-color: #fff;
+	font-weight: 500;
+	font-size: 14px;
+	line-height: 150%;
+	color: #260f08;
 }
 
 .item-details {
-	/* display: flex; */
+	display: flex;
+	align-items: center;
 }
 
 .item-quantity {
 	color: var(--red);
 	background-color: #fff;
 	font-weight: 600;
+	margin-right: 20px;
+}
+
+.item-price {
+	background-color: #fff;
+	color: var(--brown);
+	margin-right: 30px;
+	font-size: 14px;
+	font-family: "Red Hat Display", Text Regular;
+	font-weight: 100;
+}
+
+.total-quantity {
+	background-color: #fff;
+	margin-right: 20px;
+	color: var(--brown);
+	font-weight: 500;
+}
+
+.remove-from-cart {
+	background-color: #fff;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	border: 1px solid #87635a;
+}
+
+.cart-total,
+.total-container {
+	background-color: #fff;
+}
+
+.order-price p {
+	background-color: #fff;
+	font-size: 14px;
+	font-family: "Red Hat Display", Text Regular;
+	font-weight: 400;
+	color: #260f08;
+}
+
+.order-price h3 {
+	background-color: #fff;
+	color: black;
+}
+
+.order-price {
+	display: flex;
+	color: var(--brown);
+	background-color: #fff;
+	justify-content: space-between;
+	padding: 20px;
+}
+
+.confirm-btn {
+	background-color: var(--red);
+	color: #fff;
+	border: 20px;
+	width: 330px;
+	border-radius: 30px;
+	align-items: center;
+	height: 40px;
+	width: 330px;
+	margin-left: 20px;
+	margin-top: 20px;
+}
+
+.eco-container {
+	display: flex;
+	justify-content: center;
+	background-color: var(--rose-background);
+	border-radius: 8px;
+	color: #260f08;
+	align-items: center;
+	height: 40px;
+	width: 330px;
+	margin-left: 20px;
+}
+
+.eco-container p {
+	padding-left: 10px;
 }
 
 /* Mobile */

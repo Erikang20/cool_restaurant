@@ -1,22 +1,22 @@
 import { createNewElement, formatPrice } from "./util.js";
+import { orderConfirmed } from "./checkout.js";
 
 const container = document.querySelector(".cart-container");
 const empty = document.querySelector(".empty-cart");
 let heading;
-let cartItem;
+let cartItem = [];
+let cartItemContainer;
 let totalEl;
 
 export function renderCart() {
-	// Create the cart heading
 	heading = createNewElement("h2", "cart-heading");
 	heading.innerHTML = `Your Cart (${0})`;
 	container.appendChild(heading);
-	container.insertBefore(heading, cartItem);
 
 	// Create the cart item container if not already created
-	if (!cartItem) {
-		cartItem = createNewElement("div", "cart-item");
-		container.appendChild(cartItem);
+	if (!cartItemContainer) {
+		cartItemContainer = createNewElement("div", "cart-item-container");
+		container.appendChild(cartItemContainer);
 	}
 
 	// Initialize the total element (but don't append it here yet)
@@ -47,11 +47,11 @@ export function addToCart(item) {
 	itemElement.innerHTML = itemInCart;
 
 	// Append new item to cartItem
-	cartItem.appendChild(itemElement);
-	container.insertBefore(cartItem, heading);
+	cartItem.push(item);
+	cartItemContainer.appendChild(itemElement);
 
 	// Update cart heading count
-	const itemCount = cartItem.querySelectorAll(".cart-item-element").length;
+	const itemCount = cartItem.length;
 	heading.innerHTML = `Your Cart (${itemCount})`;
 
 	// Show the total container only once, when there is at least one item
@@ -64,11 +64,12 @@ export function addToCart(item) {
 	itemElement
 		.querySelector(".remove-from-cart")
 		.addEventListener("click", () => {
-			cartItem.removeChild(itemElement);
+			cartItemContainer.removeChild(itemElement);
+			cartItem = cartItem.filter((cartItem) => cartItem !== item);
 
 			// Update cart heading count after removal
-			const remainingItems =
-				cartItem.querySelectorAll(".cart-item-element").length;
+			const remainingItems = cartItem.length;
+			// cartItem.querySelectorAll(".cart-item-element").length;
 			heading.innerHTML = `Your Cart (${remainingItems})`;
 
 			// Show empty message and hide total if no items are left
@@ -96,6 +97,16 @@ function renderTotal() {
 
 	// Render the total container below the cart items
 	totalEl.innerHTML = totalItems;
-	cartItem.appendChild(totalEl);
-	cartItem.insertBefore(totalEl, cartItem.nextSibiling);
+	cartItemContainer.appendChild(totalEl);
+
+	if (cartItem.length > 0) {
+		confirmOrder();
+	}
+}
+
+function confirmOrder() {
+	const confirmOrderBtn = document.querySelector(".confirm-btn");
+	confirmOrderBtn.addEventListener("click", (e) => {
+		orderConfirmed(cartItem);
+	});
 }

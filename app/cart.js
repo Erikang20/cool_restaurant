@@ -12,6 +12,8 @@ export function renderCart() {
 	heading = createNewElement("h2", "cart-heading");
 	heading.innerHTML = `Your Cart (${0})`;
 	container.appendChild(heading);
+	// Inserts the heading before the empty illustration
+	container.insertBefore(heading, empty);
 
 	// Create the cart item container if not already created
 	if (!cartItemContainer) {
@@ -97,7 +99,7 @@ function renderTotal() {
 
 	// Render the total container below the cart items
 	totalEl.innerHTML = totalItems;
-	cartItemContainer.appendChild(totalEl);
+	cartItemContainer.insertAdjacentElement("afterend", totalEl); // Adds the confirm button at the end
 
 	if (cartItem.length > 0) {
 		confirmOrder();

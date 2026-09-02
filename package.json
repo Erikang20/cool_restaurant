@@ -2,7 +2,7 @@
 	"dependencies": {
 		"bootstrap": "^5.3.3",
 		"express": "^5.2.1",
-		"express-rate-limit": "^7.4.1"
+		"express-rate-limit": "^8.7.0"
 	},
 	"name": "cool_restaurant",
 	"version": "1.0.0",
